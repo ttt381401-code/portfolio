@@ -410,33 +410,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Interactive Profile Photo Customizer
   // ==========================================
   const avatarFileInput = document.getElementById('avatarFileInput');
-  const profileImageBox = document.getElementById('profileImageBox');
+  const profileAvatarImg = document.getElementById('profileAvatarImg');
 
-  if (avatarFileInput && profileImageBox) {
+  if (avatarFileInput && profileAvatarImg) {
     avatarFileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file && file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (event) => {
-          // Replace SVG with real photo
-          profileImageBox.innerHTML = `
-            <img src="${event.target.result}" alt="สุนิสา แซ่ลิ่ม" style="width: 100%; height: 100%; object-fit: cover; border-radius: 24px;">
-            <div class="photo-upload-overlay" style="bottom: 12px;">
-              <button type="button" class="upload-trigger-btn" id="resetPhotoBtn">
-                <i class="ri-refresh-line"></i>
-                <span>รีเซ็ตเป็นรูปวาด</span>
-              </button>
-            </div>
-          `;
-          showToast('📸 อัปเดตรูปโปรไฟล์จริงเรียบร้อยแล้วค่ะ!');
-
-          // Reset button listener
-          const resetBtn = document.getElementById('resetPhotoBtn');
-          if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
-              window.location.reload();
-            });
-          }
+          profileAvatarImg.src = event.target.result;
+          showToast('📸 อัปเดตรูปโปรไฟล์เรียบร้อยแล้วค่ะ!');
         };
         reader.readAsDataURL(file);
       }
